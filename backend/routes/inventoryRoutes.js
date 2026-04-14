@@ -1,0 +1,25 @@
+const express = require("express");
+const router = express.Router();
+
+const {
+  checkStock,
+  addInventory,
+  getInventory,
+  updateInventory,
+  deleteInventory
+} = require("../controllers/inventoryController");
+
+const { protect, isAdmin } = require("../middleware/authMiddleware");
+
+router.post("/check-stock", protect, checkStock);
+
+router.post("/", protect, isAdmin, addInventory);
+
+router.get("/", protect, isAdmin, getInventory);
+
+router.put("/:id", protect, isAdmin, updateInventory);
+
+router.delete("/:id", protect, isAdmin, deleteInventory);
+
+
+module.exports = router;
